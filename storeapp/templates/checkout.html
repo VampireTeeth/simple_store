@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block main_container %}
+
+<div class="container well centerdiv">
+  <h3>Total price: 
+    <span class="label label-default">&dollar;{{total_price}}</span>
+    <br/>
+  </h3>
+  <br/>
+
+  <form method="post" action="/store/cart/checkout/complete/">
+    {% csrf_token %}
+    <h4>Billing Information</h4>
+    <b>First Name:</b>
+    <input type="text" name="first_name" class="form-control"/>
+
+    <br/>
+    <b>Last Name:</b>
+    <input type="text" name="last_name" class="form-control"/>
+
+    <br/>
+    <b>Address 1:</b>
+    <input type="text" name="address1" class="form-control"/>
+
+    <br/>
+    <b>Address 2:</b>
+    <input type="text" name="address2" class="form-control"/>
+
+    <br/>
+    <b>City:</b>
+    <input type="text" name="city" class="form-control"/>
+
+    <br/>
+    <b>Postcode/Zipcode:</b>
+    <input type="text" name="postcode" class="form-control"/>
+
+    <br/>
+    <h4>Payment Information</h4>
+    <br/>
+    <b>Payment type:</b>
+
+    <br/>
+    <label class="radio-inline">
+      <input type="radio" name="payment_type" value="paypal" /> Paypal
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="payment_type" value="credit_card" /> Credit Card
+    </label>
+    <br />
+    <br />
+
+    <b>Paypal / CC Number:</b>
+    <input type="text" name="payment_data" class="form-control"/>
+
+    <br />
+    <br />
+    <input type="submit" value="Pay Now" class="btn btn-success"/>
+  </form>
+</div>
+{% endblock %}

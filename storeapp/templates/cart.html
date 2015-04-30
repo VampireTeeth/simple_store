@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block main_container %}
+
+<div class="container well">
+  <div>
+    <h3>Total price: 
+      <br/>
+      <br/>
+      <span class="label label-success">&dollar;{{total_price}}</span>
+      <br/>
+    </h3>
+    <br/>
+
+    {% for item in cart_items %}
+
+    <div class="media well">
+      <div class="media-left media-middle">
+        <a href="#">
+          <img class="media-object imgscale" src="{{item.imglink}}" />
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">{{item.name}}</h4>
+        <p>{{item.description}}</p>
+        <span class="badge">&dollar;{{item.price}}</span>
+      </div>
+
+      <div class="media-body">
+        <form method="post" action="/store/cart/remove/">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-danger pull-right" value="Remove"/>
+          <input type="hidden" name="product_id" value="{{item.id}}"/>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+
+    <button class="btn btn-success" onclick="window.location='/store/cart/checkout/'">Checkout</button>
+  </div>
+</div>
+{% endblock %}
