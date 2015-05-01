@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 
 from models import Product, Order
 
@@ -78,3 +79,26 @@ def completeOrder(request):
   order.save()
   request.session['cart'] = []
   return render(request, 'complete_order.html', {'cart_size' : len(request.session['cart'])})
+
+
+def adminLogin(request):
+  if request.method == 'POST':
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+      login(request, user)
+      return redirect('admin_dash_board')
+    return render(request, 'admin_login.html', {'login' : False})
+  return render(request, 'admin_login.html', None)
+
+def adminLogout(request):
+  logout(request)
+  return redirect('catalog')
+
+def adminDashBoard(request):
+  if not request.user.is_authenticated():
+    return redirect('admin_login')
+  orders = Order.objects.all()
+  ctx = {'orders' : orders, 'user' : request.user }
+  return render(request, 'admin_dash_board.html', ctx)

@@ -10,4 +10,7 @@ urlpatterns = patterns('',
     url(r'^cart/remove/$', views.removeFromCart),
     url(r'^cart/checkout/$', views.checkout),
     url(r'^cart/checkout/complete/$', views.completeOrder),
+    url(r'^admin/login/$', views.adminLogin, name='admin_login'),
+    url(r'^admin/logout/$', views.adminLogout),
+    url(r'^admin/dashboard/$', views.adminDashBoard, name='admin_dash_board'),
 )
